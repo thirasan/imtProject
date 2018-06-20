@@ -1,0 +1,11 @@
+Library
+- Numpy
+- pandas
+- matplotlib
+- scikit-learn
+- scipy.stats
+
+Statistic knowledge
+- Hypothesis testing
+  - kolmogorov smirnov test
+- median absolute deviation
