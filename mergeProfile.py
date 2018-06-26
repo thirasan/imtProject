@@ -3,6 +3,7 @@ import pandas as pd
 import csv
 
 
+# function which return average number
 def mean(numbers):
     return float(sum(numbers)) / max(len(numbers), 1)
 
@@ -15,8 +16,10 @@ pa4 = list()
 for i in range(1, 14490):
     try:
         df = pd.read_csv('profile_no1_data/profile' + str(i) + '.csv')
+        # saturation variable contain only 254 value
         saturation = df.loc[df['Intensity'] > 253]
 
+        # Find p2 point by identified the first saturation point
         pointer = 0
         while True:
             if saturation.iloc[0 + pointer].Y > mean(list(saturation.Y)) - 5.0:
@@ -27,6 +30,7 @@ for i in range(1, 14490):
                 pointer += 1
                 continue
 
+        # Find p3 point by identified the last saturation point
         pointer = 0
         while True:
             if saturation.iloc[-(1 + pointer)].Y > mean(list(saturation.Y)) - 5.0:
@@ -37,6 +41,7 @@ for i in range(1, 14490):
                 pointer += 1
                 continue
 
+        # Find the p1 point by find local mean according to p2 point
         while True:
             localMean = mean([df.loc[index_of_p2].Y, df.loc[index_of_p2 - 1].Y, df.loc[index_of_p2 - 2].Y
                                  , df.loc[index_of_p2 - 3].Y, df.loc[index_of_p2 - 4].Y])
@@ -49,6 +54,7 @@ for i in range(1, 14490):
                 index_of_p2 -= 1
                 continue
 
+        # Find the p4 point by find local mean according to p3 point
         while True:
             localMean = mean([df.loc[index_of_p3].Y, df.loc[index_of_p3 + 1].Y, df.loc[index_of_p3 + 2].Y
                                  , df.loc[index_of_p3 + 3].Y, df.loc[index_of_p3 + 4].Y])
@@ -61,6 +67,7 @@ for i in range(1, 14490):
                 index_of_p3 += 1
                 continue
 
+        # add p1-p4 to variable
         pa1.append(p1.X)
         pa2.append(p2.X)
         pa3.append(p3.X)
@@ -69,6 +76,7 @@ for i in range(1, 14490):
     except:
         print("Error with file" + str(i))
 
+# write all profile to CSV
 with open('allProfilePlot.csv', 'w', newline='') as csvfile:
     fieldnames = ['P1', 'P2', 'P3', 'P4']
     writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
