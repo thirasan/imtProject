@@ -4,25 +4,13 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
 
-df = pd.read_csv('profile_no1_data/profile1.csv')
+df = pd.read_csv('allProfilePlot.csv')
 
-fig, ax = plt.subplots(1, 1)
+p1 = df.P1.values
+p2 = df.P2.values
+p3 = df.P3.values
+p4 = df.P4.values
 
-mean, var, skew, kurt = norm.stats(moments='mvsk')
-
-x = np.linspace(norm.ppf(0.01),
-                norm.ppf(0.99), 100)
-ax.plot(x, norm.pdf(x),
-       'r-', lw=5, alpha=0.6, label='norm pdf')
-
-rv = norm()
-ax.plot(x, rv.pdf(x), 'k-', lw=2, label='frozen pdf')
-
-vals = norm.ppf([0.001, 0.5, 0.999])
-np.allclose([0.001, 0.5, 0.999], norm.cdf(vals))
-
-r = norm.rvs(size=300)
-
-ax.hist(x, density=True, histtype='stepfilled', alpha=0.2)
-ax.legend(loc='best', frameon=False)
+colors = ['red', 'tan', 'lime', 'blue']
+n, bins, patches = plt.hist([p1, p2, p3, p4], color=colors, alpha=0.5)
 plt.show()
