@@ -8,7 +8,7 @@ def mean(numbers):
 
 plt.rcParams.update({'figure.max_open_warning': 0})
 
-for i in range(4930, 5031):
+for i in range(1, 12884):
     df = pd.read_csv('profile_no1_data/profile' + str(i) + '.csv')
     saturation = df.loc[df['Intensity'] > 253]
 
@@ -21,10 +21,16 @@ for i in range(4930, 5031):
     plt.plot(df.X, df.Intensity, 'ro', markersize=1, color='blue')
 
     try:
+        # 12884
         pointer = 0
         while True:
             if saturation.iloc[0 + pointer].Y > mean(list(saturation.Y)) - 5.0:
-                index_of_p2 = saturation.index[0 + pointer] - 1
+                temp = saturation.index[0 + pointer]
+                localMean = mean([df.loc[temp].Y, df.loc[temp + 1].Y, df.loc[temp + 2].Y, df.loc[temp + 3].Y,
+                                  df.loc[temp + 4].Y])
+                while localMean + 1.5 > df.loc[temp].Y > localMean - 1.5:
+                    temp -= 1
+                index_of_p2 = temp
                 p2 = df.loc[index_of_p2]
                 break
             else:
@@ -34,7 +40,12 @@ for i in range(4930, 5031):
         pointer = 0
         while True:
             if saturation.iloc[-(1 + pointer)].Y > mean(list(saturation.Y)) - 5.0:
-                index_of_p3 = saturation.index[-(1 + pointer)] + 1
+                temp = saturation.index[-(1 + pointer)]
+                localMean = mean([df.loc[temp].Y, df.loc[temp - 1].Y, df.loc[temp - 2].Y, df.loc[temp - 3].Y,
+                                  df.loc[temp - 4].Y])
+                while localMean + 1.5 > df.loc[temp].Y > localMean - 1.5:
+                    temp += 1
+                index_of_p3 = temp
                 p3 = df.loc[index_of_p3]
                 break
             else:
@@ -42,8 +53,10 @@ for i in range(4930, 5031):
                 continue
 
         while True:
-            localMean = mean([df.loc[index_of_p2].Y, df.loc[index_of_p2 - 1].Y, df.loc[index_of_p2 - 2].Y
-                                 , df.loc[index_of_p2 - 3].Y, df.loc[index_of_p2 - 4].Y])
+            localMean = mean([df.loc[index_of_p2].Y, df.loc[index_of_p2 - 1].Y, df.loc[index_of_p2 - 2].Y,
+                              df.loc[index_of_p2 - 3].Y, df.loc[index_of_p2 - 4].Y, df.loc[index_of_p2 - 5].Y,
+                             df.loc[index_of_p2 - 6].Y, df.loc[index_of_p2 - 7].Y,df.loc[index_of_p2 - 8].Y,
+                             df.loc[index_of_p2 - 9].Y])
             if localMean + 0.1 > df.loc[index_of_p2].Y > localMean - 0.1:
                 p1 = df.loc[index_of_p2]
                 break
@@ -54,8 +67,10 @@ for i in range(4930, 5031):
                 continue
 
         while True:
-            localMean = mean([df.loc[index_of_p3].Y, df.loc[index_of_p3 + 1].Y, df.loc[index_of_p3 + 2].Y
-                                 , df.loc[index_of_p3 + 3].Y, df.loc[index_of_p3 + 4].Y])
+            localMean = mean([df.loc[index_of_p3].Y, df.loc[index_of_p3 + 1].Y, df.loc[index_of_p3 + 2].Y,
+                              df.loc[index_of_p3 + 3].Y, df.loc[index_of_p3 + 4].Y, df.loc[index_of_p3 + 5].Y,
+                             df.loc[index_of_p3 + 6].Y, df.loc[index_of_p3 + 7].Y,
+                             df.loc[index_of_p3 + 8].Y, df.loc[index_of_p3 + 9].Y])
             if localMean + 0.1 > df.loc[index_of_p3].Y > localMean - 0.1:
                 p4 = df.loc[index_of_p3]
                 break
@@ -80,5 +95,3 @@ for i in range(4930, 5031):
         continue
 
     plt.savefig('figure/figure' + str(i) + '.png')
-
-
