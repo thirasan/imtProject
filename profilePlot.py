@@ -32,6 +32,9 @@ for i in range(1, 12884):
                 localMean = mean([df.loc[temp].Y, df.loc[temp + 1].Y, df.loc[temp + 2].Y, df.loc[temp + 3].Y,
                                   df.loc[temp + 4].Y])
                 while localMean + 1.5 > df.loc[temp].Y > localMean - 1.5:
+                    if temp < 5:
+                        # temp = saturation.index[0 + pointer]
+                        break
                     temp -= 1
                 index_of_p2 = temp
                 p2 = df.loc[index_of_p2]
@@ -39,6 +42,7 @@ for i in range(1, 12884):
             else:
                 pointer += 1
                 continue
+
         # Find p3 point by identified the last saturation point
         pointer = 0
         while True:
@@ -47,6 +51,9 @@ for i in range(1, 12884):
                 localMean = mean([df.loc[temp].Y, df.loc[temp - 1].Y, df.loc[temp - 2].Y, df.loc[temp - 3].Y,
                                   df.loc[temp - 4].Y])
                 while localMean + 1.5 > df.loc[temp].Y > localMean - 1.5:
+                    if temp > len(df.index) - 5:
+                        # temp = saturation.index[-(1 + pointer)]
+                        break
                     temp += 1
                 index_of_p3 = temp
                 p3 = df.loc[index_of_p3]
@@ -54,34 +61,45 @@ for i in range(1, 12884):
             else:
                 pointer += 1
                 continue
+
         # Find the p1 point by find local mean according to p2 point
         while True:
             localMean = mean([df.loc[index_of_p2].Y, df.loc[index_of_p2 - 1].Y, df.loc[index_of_p2 - 2].Y,
                               df.loc[index_of_p2 - 3].Y, df.loc[index_of_p2 - 4].Y, df.loc[index_of_p2 - 5].Y,
-                             df.loc[index_of_p2 - 6].Y, df.loc[index_of_p2 - 7].Y,df.loc[index_of_p2 - 8].Y,
-                             df.loc[index_of_p2 - 9].Y])
+                              df.loc[index_of_p2 - 6].Y, df.loc[index_of_p2 - 7].Y, df.loc[index_of_p2 - 8].Y,
+                              df.loc[index_of_p2 - 9].Y])
+
+            p1 = df.loc[index_of_p2]
             if localMean + 0.1 > df.loc[index_of_p2].Y > localMean - 0.1:
-                p1 = df.loc[index_of_p2]
+                if p2.X - p1.X < 4.5:
+                    index_of_p2 -= 1
+                    continue
                 break
-            elif index_of_p2 <= 5:
+            elif index_of_p2 <= 10:
                 break
             else:
                 index_of_p2 -= 1
                 continue
+
         # Find the p4 point by find local mean according to p3 point
         while True:
             localMean = mean([df.loc[index_of_p3].Y, df.loc[index_of_p3 + 1].Y, df.loc[index_of_p3 + 2].Y,
                               df.loc[index_of_p3 + 3].Y, df.loc[index_of_p3 + 4].Y, df.loc[index_of_p3 + 5].Y,
-                             df.loc[index_of_p3 + 6].Y, df.loc[index_of_p3 + 7].Y,
-                             df.loc[index_of_p3 + 8].Y, df.loc[index_of_p3 + 9].Y])
+                              df.loc[index_of_p3 + 6].Y, df.loc[index_of_p3 + 7].Y,
+                              df.loc[index_of_p3 + 8].Y, df.loc[index_of_p3 + 9].Y])
+
+            p4 = df.loc[index_of_p3]
             if localMean + 0.1 > df.loc[index_of_p3].Y > localMean - 0.1:
-                p4 = df.loc[index_of_p3]
+                if p4.X - p3.X < 4.5:
+                    index_of_p3 += 1
+                    continue
                 break
-            elif index_of_p3 >= len(df.index) - 5:
+            elif index_of_p3 >= len(df.index) - 10:
                 break
             else:
                 index_of_p3 += 1
                 continue
+
         # draw significant point with black color
         plt.plot(p2.X, p2.Y, 'ro', markersize=1, color='black')
         plt.plot(p3.X, p3.Y, 'ro', markersize=1, color='black')
