@@ -1,3 +1,5 @@
+from statistics import median
+
 import matplotlib.pyplot as plt
 import pandas as pd
 
@@ -13,6 +15,8 @@ plt.plot(df.P2, df.index, 'ro', markersize=1, color='orange')
 plt.plot(df.P3, df.index, 'ro', markersize=1, color='green')
 plt.plot(df.P4, df.index, 'ro', markersize=1, color='brown')
 
-plt.axis([-10, 20, -10, 310])
+# print(str(median(df.P1)) + " " + str(median(df.P4)))
+
+# plt.axis([-10, 20, -10, 310])
 
 plt.show()
