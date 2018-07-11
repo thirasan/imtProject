@@ -9,7 +9,7 @@ def mean(numbers):
 plt.rcParams.update({'figure.max_open_warning': 0})
 
 for i in range(1, 12884):
-    df = pd.read_csv('new_profile_no1_data/profile' + str(i) + '.csv')
+    df = pd.read_csv('profile_no1_data/profile' + str(i) + '.csv')
     # saturation variable contain only 254 value\
     saturation = df.loc[df['Intensity'] > 253]
 
