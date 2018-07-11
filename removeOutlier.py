@@ -1,46 +1,40 @@
-from statistics import median
 import matplotlib.pyplot as plt
-
-import numpy
 import pandas as pd
+import csv
 
+df_median_profile = pd.read_csv('medianProfile.csv')
+df_mad = pd.read_csv('MAD.csv')
 
-# def mean(numbers):
-#     return float(sum(numbers)) / max(len(numbers), 1)
+# for i in range(1, 12884):
+#
+#     x = list()
+#     y = list()
+#     intensity = list()
+#
+#     df = pd.read_csv('profile_no1_data/profile' + str(i) + '.csv')
+#     for row, rangeMad, medianPro in zip(df.iterrows(), df_mad.iterrows(), df_median_profile.iterrows()):
+#         x.append(row[1].X)
+#         intensity.append(row[1].Intensity)
+#         if rangeMad[1].MAD_Top < row[1].Y < rangeMad[1].MAD_Bottom:
+#             y.append(row[1].Y)
+#         else:
+#             y.append(medianPro[1].Y)
+#     with open('profile_no1_data/profile' + str(i) + '.csv', 'w', newline='') as csvfile:
+#         fieldnames = ['X', 'Y', 'Intensity']
+#         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+#
+#         writer.writeheader()
+#         for a, j, k in zip(x, y, intensity):
+#             writer.writerow({'X': '' + str(a), 'Y': '' + str(j), 'Intensity': '' + str(k)})
 
-
-pa1 = list()
-pa2 = list()
-pa3 = list()
-pa4 = list()
-
-tableX = numpy.zeros(shape=(202, 345))
-tableY = numpy.zeros(shape=(202, 345))
-tableIntensity = numpy.zeros(shape=(202, 345))
-
-for i in range(1, 345):
-    df = pd.read_csv('profile_no1_data/profile' + str(i) + '.csv')
-    for row in df.iterrows():
-        tableX[row[0]][i] = row[1].X
-        tableY[row[0]][i] = row[1].Y
-        tableIntensity[row[0]][i] = row[1].Intensity
-
-medianProfileX = list()
-medianProfileY = list()
-medianProfileIntensity = list()
-
-for i in range(len(tableX)):
-    medianProfileX.append(median(tableX[i]))
-    medianProfileY.append(median(tableY[i]))
-    medianProfileIntensity.append(median(tableIntensity[i]))
-
-plt.figure(i)
-plt.suptitle('Profile' + str(i), fontsize=14, fontweight='bold')
+plt.figure(1)
+plt.suptitle('medianRange', fontsize=14, fontweight='bold')
 plt.xlabel('X axis')
 plt.ylabel('Y axis')
 
-# plot every point
-plt.plot(medianProfileX, medianProfileY, 'ro', markersize=1, color='red')
-plt.plot(medianProfileX, medianProfileIntensity, 'ro', markersize=1, color='blue')
-plt.show()
+plt.plot(df_median_profile.X, df_median_profile.Y, 'ro', markersize=1, color='red')
+plt.plot(df_median_profile.X, df_median_profile.Intensity, 'ro', markersize=1, color='blue')
+plt.plot(df_median_profile.X, df_mad.MAD_Top, 'ro', markersize=1, color='greenyellow')
+plt.plot(df_median_profile.X, df_mad.MAD_Bottom, 'ro', markersize=1, color='greenyellow')
 
+plt.show()
