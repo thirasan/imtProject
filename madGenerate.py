@@ -14,11 +14,11 @@ def mad(numbers, M):
     return median(ad)
 
 
-tableX = numpy.zeros(shape=(202, 345))
-tableY = numpy.zeros(shape=(202, 345))
-tableIntensity = numpy.zeros(shape=(202, 345))
+tableX = numpy.zeros(shape=(202, 12884))
+tableY = numpy.zeros(shape=(202, 12884))
+tableIntensity = numpy.zeros(shape=(202, 12884))
 
-for i in range(1, 345):
+for i in range(1, 12884):
     df = pd.read_csv('profile_no1_data/profile' + str(i) + '.csv')
     for row in df.iterrows():
         tableX[row[0]][i-1] = row[1].X
@@ -33,8 +33,8 @@ for i in range(len(tableY)):
     M = median(tableY[i])
     Mad = mad(tableY[i], M)
     madY.append(Mad)
-    madTop.append(M + 10*Mad)
-    madBottom.append(M - 10*Mad)
+    madTop.append(M + 3*Mad)
+    madBottom.append(M - 3*Mad)
 
 with open('MAD.csv', 'w', newline='') as csvfile:
     fieldnames = ['MAD', 'MAD_Top', 'MAD_Bottom']
