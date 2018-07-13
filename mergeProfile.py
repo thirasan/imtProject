@@ -64,12 +64,10 @@ for i in range(1, 12884):
         # Find the p1 point by find local mean according to p2 point
         while True:
             localMean = mean([df.loc[index_of_p2].Y, df.loc[index_of_p2 - 1].Y, df.loc[index_of_p2 - 2].Y,
-                              df.loc[index_of_p2 - 3].Y, df.loc[index_of_p2 - 4].Y, df.loc[index_of_p2 - 5].Y,
-                              df.loc[index_of_p2 - 6].Y, df.loc[index_of_p2 - 7].Y, df.loc[index_of_p2 - 8].Y,
-                              df.loc[index_of_p2 - 9].Y])
+                              df.loc[index_of_p2 - 3].Y, df.loc[index_of_p2 - 4].Y, df.loc[index_of_p2 - 5].Y])
 
             p1 = df.loc[index_of_p2]
-            if localMean + 0.1 > df.loc[index_of_p2].Y > localMean - 0.1:
+            if localMean + 0.5 > df.loc[index_of_p2].Y > localMean - 0.5:
                 if p2.X - p1.X < 4.5:
                     index_of_p2 -= 1
                     continue
@@ -84,12 +82,10 @@ for i in range(1, 12884):
         # Find the p4 point by find local mean according to p3 point
         while True:
             localMean = mean([df.loc[index_of_p3].Y, df.loc[index_of_p3 + 1].Y, df.loc[index_of_p3 + 2].Y,
-                              df.loc[index_of_p3 + 3].Y, df.loc[index_of_p3 + 4].Y, df.loc[index_of_p3 + 5].Y,
-                              df.loc[index_of_p3 + 6].Y, df.loc[index_of_p3 + 7].Y,
-                              df.loc[index_of_p3 + 8].Y, df.loc[index_of_p3 + 9].Y])
+                              df.loc[index_of_p3 + 3].Y, df.loc[index_of_p3 + 4].Y, df.loc[index_of_p3 + 5].Y])
 
             p4 = df.loc[index_of_p3]
-            if localMean + 0.1 > df.loc[index_of_p3].Y > localMean - 0.1:
+            if localMean + 0.5 > df.loc[index_of_p3].Y > localMean - 0.5:
                 if p4.X - p3.X < 4.5:
                     index_of_p3 += 1
                     continue
