@@ -23,7 +23,7 @@ for i in range(1, 12884):
         # Find p2 point by identified the first saturation point
         pointer = 0
         while True:
-            if saturation.iloc[0 + pointer].Y > mean(list(saturation.Y)) - 5.0:
+            if saturation.iloc[0 + pointer].Y > mean(list(saturation.Y)) - 0.2:
                 temp = saturation.index[0 + pointer]
                 localMean = mean([df.loc[temp].Y, df.loc[temp + 1].Y, df.loc[temp + 2].Y, df.loc[temp + 3].Y,
                                   df.loc[temp + 4].Y])
@@ -43,7 +43,7 @@ for i in range(1, 12884):
         # Find p3 point by identified the last saturation point
         pointer = 0
         while True:
-            if saturation.iloc[-(1 + pointer)].Y > mean(list(saturation.Y)) - 5.0:
+            if saturation.iloc[-(1 + pointer)].Y > mean(list(saturation.Y)) - 0.2:
                 temp = saturation.index[-(1 + pointer)]
                 localMean = mean([df.loc[temp].Y, df.loc[temp - 1].Y, df.loc[temp - 2].Y, df.loc[temp - 3].Y,
                                   df.loc[temp - 4].Y])
