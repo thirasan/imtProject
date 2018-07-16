@@ -17,6 +17,6 @@ plt.plot(df.P4, df.index, 'ro', markersize=1, color='brown')
 
 # print(str(median(df.P1)) + " " + str(median(df.P4)))
 
-# plt.axis([-10, 20, -10, 310])
+# plt.axis([-15, 20, -100, 12984])
 
 plt.show()

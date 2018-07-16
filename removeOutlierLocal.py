@@ -4,21 +4,25 @@ import csv
 
 df_median_profile = pd.read_csv('localMedian/medianProfile1-100.csv')
 df_mad = pd.read_csv('localMAD/mad1-100.csv')
+dfPrevious = df_median_profile
 
 plt.rcParams.update({'figure.max_open_warning': 0})
 
 for i in range(1, 12884):
-    if i == 12800:
+    try:
+        if i % 100 == 0:
+            df_median_profile = pd.read_csv('localMedian/medianProfile' + str(i) + "-" + str(i+100) + '.csv')
+            df_mad = pd.read_csv('localMAD/mad' + str(i) + "-" + str(i + 100) + '.csv')
+    except:
         df_median_profile = pd.read_csv('localMedian/medianProfile' + str(i) + '-12883.csv')
         df_mad = pd.read_csv('localMAD/mad' + str(i) + '-12883.csv')
-    elif i % 100 == 0:
-        df_median_profile = pd.read_csv('localMedian/medianProfile' + str(i) + "-" + str(i+100) + '.csv')
-        df_mad = pd.read_csv('localMAD/mad' + str(i) + "-" + str(i+100) + '.csv')
 
     x = list()
     y = list()
     intensity = list()
 
+    # if i > 1:
+    #     dfPrevious = pd.read_csv('profile_no1_data/profile' + str(i - 1) + '.csv')
     df = pd.read_csv('profile_no1_data/profile' + str(i) + '.csv')
 
     for row, rangeMad, medianPro in zip(df.iterrows(), df_mad.iterrows(), df_median_profile.iterrows()):
@@ -48,4 +52,4 @@ for i in range(1, 12884):
     # plt.savefig('figureSample/figureSample' + str(i) + '.png')
 
 
-# plt.show()
+    # plt.show()

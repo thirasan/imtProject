@@ -68,4 +68,14 @@ for i in range(1, 12884):
             writer.writeheader()
             for a, b, c in zip(madY, madTop, madBottom):
                 writer.writerow({'MAD': '' + str(a), 'MAD_Top': '' + str(b), 'MAD_Bottom': '' + str(c)})
+
         pointer = i
+
+        tableX = list()
+        tableY = list()
+        tableIntensity = list()
+
+        for z in range(1, 203):
+            tableX.append([])
+            tableY.append([])
+            tableIntensity.append([])
