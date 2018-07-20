@@ -13,7 +13,8 @@ pa2 = list()
 pa3 = list()
 pa4 = list()
 
-for i in range(5000, 7000):
+for i in range(1, 12884
+               ):
     try:
         df = pd.read_csv('profile_no1_data/profile' + str(i) + '.csv')
         # saturation variable contain only 254 value

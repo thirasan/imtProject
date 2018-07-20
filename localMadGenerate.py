@@ -58,8 +58,8 @@ for i in range(1, 12884):
             M = medianProfileY[m-1]
             Mad = mad(tableY[m], M)
             madY.append(Mad)
-            madTop.append(M + 7 * Mad)
-            madBottom.append(M - 7 * Mad)
+            madTop.append(M + 3 * Mad)
+            madBottom.append(M - 3 * Mad)
 
         with open('localMAD/mad' + str(pointer) + "-" + str(i) + '.csv', 'w', newline='') as csvfile:
             fieldnames = ['MAD', 'MAD_Top', 'MAD_Bottom']

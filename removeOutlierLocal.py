@@ -3,7 +3,7 @@ import pandas as pd
 import csv
 
 df_median_profile = pd.read_csv('localMedian/medianProfile1-100.csv')
-df_mad = pd.read_csv('localMAD/mad1-100.csv')
+df_mad = pd.read_csv('localMAD/mad1-50.csv')
 dfPrevious = df_median_profile
 
 plt.rcParams.update({'figure.max_open_warning': 0})
@@ -26,12 +26,14 @@ for i in range(1, 12884):
     df = pd.read_csv('profile_no1_data/profile' + str(i) + '.csv')
 
     for row, rangeMad, medianPro in zip(df.iterrows(), df_mad.iterrows(), df_median_profile.iterrows()):
-        x.append(row[1].X)
         intensity.append(row[1].Intensity)
-        if rangeMad[1].MAD_Top <= row[1].Y <= rangeMad[1].MAD_Bottom:
+        if rangeMad[1].MAD_Bottom <= row[1].Y <= rangeMad[1].MAD_Top:
+            x.append(row[1].X)
             y.append(row[1].Y)
         else:
+            x.append(medianPro[1].X)
             y.append(medianPro[1].Y)
+
     with open('profile_no1_data/profile' + str(i) + '.csv', 'w', newline='') as csvfile:
         fieldnames = ['X', 'Y', 'Intensity']
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
