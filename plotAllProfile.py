@@ -8,21 +8,7 @@ def mean(numbers):
     return float(sum(numbers)) / max(len(numbers), 1)
 
 
-def average(lst):
-    return sum(lst) / len(lst)
-
-
 df = pd.read_csv('allProfilePlot.csv')
-
-thickness1 = list()
-thickness2 = list()
-
-for row in df.iterrows():
-    thickness1.append(row[1].PY2 - row[1].PY1)
-    thickness2.append(row[1].PY4 - row[1].PY3)
-
-print(str(mean(thickness1)) + "  " + str(average(thickness1)))
-print(str(mean(thickness2)) + "  " + str(average(thickness2)))
 
 plt.figure(1)
 plt.suptitle('Profile', fontsize=14, fontweight='bold')
