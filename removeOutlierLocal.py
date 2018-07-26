@@ -8,14 +8,14 @@ dfPrevious = df_median_profile
 
 plt.rcParams.update({'figure.max_open_warning': 0})
 
-for i in range(1, 12884):
+for i in range(1, 1705):
     try:
         if i % 100 == 0:
             df_median_profile = pd.read_csv('localMedian/medianProfile' + str(i) + "-" + str(i+100) + '.csv')
             df_mad = pd.read_csv('localMAD/mad' + str(i) + "-" + str(i + 100) + '.csv')
     except:
         df_median_profile = pd.read_csv('localMedian/medianProfile' + str(i) + '-12883.csv')
-        df_mad = pd.read_csv('localMAD/mad' + str(i) + '-12883.csv')
+        df_mad = pd.read_csv('localMAD/mad' + str(i) + '-1705.csv')
 
     x = list()
     y = list()
