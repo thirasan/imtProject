@@ -7,8 +7,9 @@ def mean(numbers):
 
 
 plt.rcParams.update({'figure.max_open_warning': 0})
+dfPoint = pd.read_csv('allProfilePlot.csv')
 
-for i in range(10000, 12000):
+for i in range(1, 1705):
     df = pd.read_csv('profile_no1_data/profile' + str(i) + '.csv')
     # saturation variable contain only 254 value\
     saturation = df.loc[df['Intensity'] > 253]
@@ -23,88 +24,15 @@ for i in range(10000, 12000):
     plt.plot(df.X, df.Intensity, 'ro', markersize=1, color='blue')
 
     try:
-        # 12884
-        # Find p2 point by identified the first saturation point
-        pointer = 0
-        while True:
-            if saturation.iloc[0 + pointer].Y > mean(list(saturation.Y)) - 0.2:
-                temp = saturation.index[0 + pointer]
-                localMean = mean([df.loc[temp].Y, df.loc[temp + 1].Y, df.loc[temp + 2].Y, df.loc[temp + 3].Y,
-                                  df.loc[temp + 4].Y])
-                while localMean + 1.5 > df.loc[temp].Y > localMean - 1.5:
-                    if temp < 5:
-                        # temp = saturation.index[0 + pointer]
-                        break
-                    temp -= 1
-                index_of_p2 = temp
-                p2 = df.loc[index_of_p2]
-                break
-            else:
-                pointer += 1
-                continue
-
-        # Find p3 point by identified the last saturation point
-        pointer = 0
-        while True:
-            if saturation.iloc[-(1 + pointer)].Y > mean(list(saturation.Y)) - 0.2:
-                temp = saturation.index[-(1 + pointer)]
-                localMean = mean([df.loc[temp].Y, df.loc[temp - 1].Y, df.loc[temp - 2].Y, df.loc[temp - 3].Y,
-                                  df.loc[temp - 4].Y])
-                while localMean + 1.5 > df.loc[temp].Y > localMean - 1.5:
-                    if temp > len(df.index) - 5:
-                        # temp = saturation.index[-(1 + pointer)]
-                        break
-                    temp += 1
-                index_of_p3 = temp
-                p3 = df.loc[index_of_p3]
-                break
-            else:
-                pointer += 1
-                continue
-
-        # Find the p1 point by find local mean according to p2 point
-        while True:
-            localMean = mean([df.loc[index_of_p2].Y, df.loc[index_of_p2 - 1].Y, df.loc[index_of_p2 - 2].Y,
-                              df.loc[index_of_p2 - 3].Y, df.loc[index_of_p2 - 4].Y, df.loc[index_of_p2 - 5].Y])
-
-            p1 = df.loc[index_of_p2]
-            if localMean + 0.5 > df.loc[index_of_p2].Y > localMean - 0.5:
-                if p2.X - p1.X < 4.5:
-                    index_of_p2 -= 1
-                    continue
-                break
-            elif index_of_p2 <= 10:
-                break
-            else:
-                index_of_p2 -= 1
-                continue
-
-        # Find the p4 point by find local mean according to p3 point
-        while True:
-            localMean = mean([df.loc[index_of_p3].Y, df.loc[index_of_p3 + 1].Y, df.loc[index_of_p3 + 2].Y,
-                              df.loc[index_of_p3 + 3].Y, df.loc[index_of_p3 + 4].Y, df.loc[index_of_p3 + 5].Y])
-
-            p4 = df.loc[index_of_p3]
-            if localMean + 0.5 > df.loc[index_of_p3].Y > localMean - 0.5:
-                if p4.X - p3.X < 4.5:
-                    index_of_p3 += 1
-                    continue
-                break
-            elif index_of_p3 >= len(df.index) - 10:
-                break
-            else:
-                index_of_p3 += 1
-                continue
-
         # draw significant point with black color
-        plt.plot(p2.X, p2.Y, 'ro', markersize=1, color='black')
-        plt.plot(p3.X, p3.Y, 'ro', markersize=1, color='black')
-        plt.plot(p1.X, p1.Y, 'ro', markersize=1, color='black')
-        plt.plot(p4.X, p4.Y, 'ro', markersize=1, color='black')
-        plt.text(p2.X - 2.5, p2.Y + 0.5, r'P2', fontsize=8)
-        plt.text(p3.X + 0.5, p3.Y + 0.5, r'P3', fontsize=8)
-        plt.text(p1.X - 2.5, p1.Y + 0.5, r'P1', fontsize=8)
-        plt.text(p4.X + 0.5, p4.Y + 0.5, r'P4', fontsize=8)
+        plt.plot(dfPoint.iloc[i].PX2, dfPoint.iloc[i].PY2, 'ro', markersize=1, color='black')
+        plt.plot(dfPoint.iloc[i].PX3, dfPoint.iloc[i].PY3, 'ro', markersize=1, color='black')
+        plt.plot(dfPoint.iloc[i].PX1, dfPoint.iloc[i].PY1, 'ro', markersize=1, color='black')
+        plt.plot(dfPoint.iloc[i].PX4, dfPoint.iloc[i].PY4, 'ro', markersize=1, color='black')
+        plt.text(dfPoint.iloc[i].PX2 - 2.5, dfPoint.iloc[i].PY2 + 0.5, r'P2', fontsize=8)
+        plt.text(dfPoint.iloc[i].PX3 + 0.5, dfPoint.iloc[i].PY3 + 0.5, r'P3', fontsize=8)
+        plt.text(dfPoint.iloc[i].PX1 - 2.5, dfPoint.iloc[i].PY1 + 0.5, r'P1', fontsize=8)
+        plt.text(dfPoint.iloc[i].PX4 + 0.5, dfPoint.iloc[i].PX4 + 0.5, r'P4', fontsize=8)
 
     except:
         print("Error with file" + str(i))
